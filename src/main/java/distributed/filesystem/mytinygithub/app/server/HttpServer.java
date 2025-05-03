@@ -1,5 +1,9 @@
 package distributed.filesystem.mytinygithub.app.server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.spi.LoggerContextFactory;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpServer {
+    private static final Logger logger = LogManager.getLogger(HttpServer.class);
+
     private final Map<String, RequestRunner> routes;
     private final ServerSocket serverSocket;
     private HttpHandler handler;
@@ -24,6 +30,7 @@ public class HttpServer {
         handler = new HttpHandler(routes);
 
         while (true) {
+            logger.info("Listening for TCP requests");
             Socket clientConnection = serverSocket.accept();
             handleConnection(clientConnection);
         }

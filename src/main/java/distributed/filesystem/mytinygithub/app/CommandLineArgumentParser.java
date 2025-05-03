@@ -1,9 +1,9 @@
 package distributed.filesystem.mytinygithub.app;
 
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 
-@CommandLine.Command(
+@Command(
         name = "",
         subcommands = {
                 Server.class,

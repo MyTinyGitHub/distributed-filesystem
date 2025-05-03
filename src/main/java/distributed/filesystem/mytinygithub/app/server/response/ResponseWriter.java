@@ -1,6 +1,8 @@
 package distributed.filesystem.mytinygithub.app.server.response;
 
 import distributed.filesystem.mytinygithub.app.server.HttpStatusCode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ResponseWriter {
+    private static final Logger logger = LogManager.getLogger(ResponseWriter.class);
 
     /**
      * Write a HTTPResponse to an outputstream
@@ -40,7 +43,8 @@ public class ResponseWriter {
                 outputStream.writeBytes("\r\n");
             }
 
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            logger.error(e);
         }
     }
 

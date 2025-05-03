@@ -1,6 +1,8 @@
 package distributed.filesystem.mytinygithub.app.server.request;
 
 import distributed.filesystem.mytinygithub.app.server.HttpMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,6 +12,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HttpDecoder {
+
+    private static Logger logger = LogManager.getLogger(HttpDecoder.class);
+
     public static Optional<HttpRequest> decode(final InputStream inputStream) {
         return readMessage(inputStream).flatMap(HttpDecoder::buildRequest);
     }
@@ -34,7 +39,9 @@ public class HttpDecoder {
             }
 
             return Optional.of(message);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            logger.error(e);
+
             return Optional.empty();
         }
     }
@@ -73,6 +80,8 @@ public class HttpDecoder {
 
             return Optional.of(request);
         } catch (URISyntaxException | IllegalArgumentException e) {
+            logger.error(e);
+
             return Optional.empty();
         }
     }
